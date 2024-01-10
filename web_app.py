@@ -5,8 +5,18 @@ from main import calculate_rebalancing
 from test import output_sanity_check
 
 def app():
-    st.title("Excel File Viewer")
+    st.title("Stock Rebalancer")
 
+    # Display a info message
+    with st.expander("ℹ️ How to use rebalancer"):
+        st.write("""
+        This page allows you to upload an Excel file of your portfolio and view the rebalancing instructions. \n
+        Excel file should have 3 columns: 'stock_symbol', 'number_of_shares', 'target_percentage' \n
+        **stock_symbol** : the stock symbol of the stock \n
+        **number_of_shares** : the number of shares of the stock you currently own \n
+        **target_percentage** : the percentage of the stock you want to own \n
+        """)
+        
     # File upload widget
     uploaded_file = st.file_uploader("Choose an Excel file", type=["xlsx", "xls"])
 
@@ -14,16 +24,7 @@ def app():
         # Read the Excel file into a DataFrame
         excel_data = pd.read_excel(uploaded_file ,usecols=['stock_symbol','number_of_shares','target_percentage'])
 
-        # Display a info message
-        with st.expander("ℹ️ How to use rebalancer"):
-            st.write("""
-            This page allows you to upload an Excel file of your portfolio and view the rebalancing instructions. \n
-            Excel file should have 3 columns: 'stock_symbol', 'number_of_shares', 'target_percentage' \n
-            **stock_symbol** : the stock symbol of the stock \n
-            **number_of_shares** : the number of shares of the stock you currently own \n
-            **target_percentage** : the percentage of the stock you want to own \n
-            """)
-        st.expander(label="i:", expanded=False)
+
 
         # Display the DataFrame
         st.write("### Excel Data")
