@@ -36,8 +36,11 @@ def app():
         # Regulate decimal places
         # print(shares_to_rebalance.columns) 
         st.write("### Rebalancing Summary")
-        st.dataframe(shares_to_rebalance.style.format(subset=['target_percentage','current_stock_price', 'current_total_value', 'current_percentage', 'difference',], formatter="{:.2f}"))
-        
+        with st.expander("Brief View"):
+            st.dataframe(shares_to_rebalance.drop(columns=['target_percentage','current_stock_price','number_of_shares','difference']).style.format(subset=['current_total_value',], formatter="{:.2f}"))
+        with st.expander("Detailed View"):
+            st.dataframe(shares_to_rebalance.style.format(subset=['target_percentage','current_stock_price', 'current_total_value', 'current_percentage', 'difference',], formatter="{:.2f}"))
+
         # Display the rebalancing instructions
         st.write("### Rebalancing Instructions")
         for instruction in shares_to_rebalance.apply(lambda x: (("Buy" if x['buy_sell']>0 else "Sell" ) +f" {np.abs(x['buy_sell'])} shares of {x['stock_symbol']} at ${round(x['current_stock_price'],2)}"), axis=1):
