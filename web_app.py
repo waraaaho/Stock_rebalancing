@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import os
 from main import calculate_rebalancing
 from test import output_sanity_check
 
@@ -40,6 +41,8 @@ def app():
         **number_of_shares** : the number of shares of the stock you currently own \n
         **target_percentage** : the percentage of the stock you want to own \n
         """)
+        st.write(os.getcwd())
+        st.image("sample_img.png", caption="Sample Excel File", use_column_width=True)
     data_type = st.radio(
         "Would you like to upload an Excel file or fill a form?",
         ["Upload Excel File", "Fill a Form"],
